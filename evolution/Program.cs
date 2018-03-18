@@ -18,25 +18,17 @@ namespace evolution
             {
                 matchIndex = org.GetMatchIndex(terrain);
                 var origShape = org.Shape;
-                //Console.WriteLine("Match index is {0}", matchIndex);
                 int[] newShape = origShape.Clone() as int[];
                 Reshape(newShape);
                 AttemptCount++;
                 var clone = new Organism(newShape);
                 if(clone.GetMatchIndex(terrain)>matchIndex)
                 {
-                    //Console.WriteLine("Rejected");
                     org.Shape = origShape;
                     RejectionCount++;
                 }
                 else{
                     org = clone;
-                    // var matchData = org.GetMatchData(terrain);
-                    // foreach (var item in matchData)
-                    // {
-                    //     Console.Write("{0},", item);
-                    // }
-                    // Console.WriteLine();
                 }
                 Thread.Sleep(50);
             }
