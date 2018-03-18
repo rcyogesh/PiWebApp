@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,6 +16,11 @@ namespace MVCApp.Controllers
         public DateTime GetTime()
         {
             return DateTime.Now;
+        }
+
+        public double[] GetEvolutionInfo()
+        {
+            return new double[]{ Program.evolution.AttemptCount, Program.evolution.RejectionCount};
         }
 
         public double GetTemperature()

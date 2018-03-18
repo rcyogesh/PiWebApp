@@ -12,8 +12,12 @@ namespace MVCApp
 {
     public class Program
     {
+        internal static evolution.Program evolution;
+        
         public static void Main(string[] args)
         {
+            evolution = new evolution.Program();
+            Task.Run((Action)evolution.Start);
             BuildWebHost(args).Run();
         }
 

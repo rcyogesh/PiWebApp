@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace evolution
 {
@@ -6,7 +7,7 @@ namespace evolution
     {
         public int AttemptCount { get; private set; }
         public int RejectionCount  { get; private set; }
-        public void Start(string[] args)
+        public void Start()
         {
             Organism org = new Organism();
             int[] terrain = Organism.CreateShape();
@@ -17,26 +18,27 @@ namespace evolution
             {
                 matchIndex = org.GetMatchIndex(terrain);
                 var origShape = org.Shape;
-                Console.WriteLine("Match index is {0}", matchIndex);
+                //Console.WriteLine("Match index is {0}", matchIndex);
                 int[] newShape = origShape.Clone() as int[];
                 Reshape(newShape);
                 AttemptCount++;
                 var clone = new Organism(newShape);
                 if(clone.GetMatchIndex(terrain)>matchIndex)
                 {
-                    Console.WriteLine("Rejected");
+                    //Console.WriteLine("Rejected");
                     org.Shape = origShape;
                     RejectionCount++;
                 }
                 else{
                     org = clone;
-                    var matchData = org.GetMatchData(terrain);
-                    foreach (var item in matchData)
-                    {
-                        Console.Write("{0},", item);
-                    }
-                    Console.WriteLine();
+                    // var matchData = org.GetMatchData(terrain);
+                    // foreach (var item in matchData)
+                    // {
+                    //     Console.Write("{0},", item);
+                    // }
+                    // Console.WriteLine();
                 }
+                Thread.Sleep(50);
             }
             while(org.GetMatchIndex(terrain) > 5);
 
