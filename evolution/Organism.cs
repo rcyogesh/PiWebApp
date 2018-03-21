@@ -37,7 +37,7 @@ public class Organism
 
     public Organism(int[] shape)
     {
-        this.Shape = shape;
+        this.shape = shape;
     }
 
     public int[] GetMatchData(int[] terrain)
@@ -50,15 +50,9 @@ public class Organism
         return total;
     }
 
-    public int[] Shape {
-        get{
-        return shape;
-    } set{
-        shape = value;
-    }
-    }
+    public int[] Shape { get{ return shape; } }
 
-    public double GetMatchIndex(int[] terrain)
+    public int GetMatchIndex(int[] terrain)
     {
         return GetMatchIndex(this, terrain);
     }

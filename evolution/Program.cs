@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace evolution
@@ -7,32 +8,34 @@ namespace evolution
     {
         public int AttemptCount { get; private set; }
         public int RejectionCount  { get; private set; }
+        public int CurrentMatchIndex { get; private set; }
+        public int MatchIndexThreshold { get; set; } = 5;
+        public List<KeyValuePair<int,int>> history=new List<KeyValuePair<int,int>>();
         public void Start()
         {
             Organism org = new Organism();
             int[] terrain = Organism.CreateShape();
-            double matchIndex;
             AttemptCount=0;
             RejectionCount = 0;
             do
             {
-                matchIndex = org.GetMatchIndex(terrain);
-                var origShape = org.Shape;
-                int[] newShape = origShape.Clone() as int[];
+                CurrentMatchIndex = org.GetMatchIndex(terrain);
+                int[] newShape = org.Shape.Clone() as int[];
                 Reshape(newShape);
                 AttemptCount++;
                 var clone = new Organism(newShape);
-                if(clone.GetMatchIndex(terrain)>matchIndex)
+                if(clone.GetMatchIndex(terrain)>CurrentMatchIndex)
                 {
-                    org.Shape = origShape;
                     RejectionCount++;
                 }
-                else{
+                else
+                {
                     org = clone;
+                    history.Add(new KeyValuePair<int, int>(AttemptCount, CurrentMatchIndex));
                 }
                 Thread.Sleep(50);
             }
-            while(org.GetMatchIndex(terrain) > 5);
+            while(org.GetMatchIndex(terrain) > MatchIndexThreshold);
 
             Console.WriteLine("{0} attempts, {1} rejections", AttemptCount, RejectionCount);
         }

@@ -8,19 +8,14 @@ namespace MVCApp.Controllers
 {
     public class TestController : Controller
     {
-        public TestController()
-        {
-            Console.WriteLine("cted");
-        }
-        
         public DateTime GetTime()
         {
             return DateTime.Now;
         }
 
-        public double[] GetEvolutionInfo()
+        public object GetEvolutionInfo()
         {
-            return new double[]{ Program.evolution.AttemptCount, Program.evolution.RejectionCount};
+            return Program.evolution;
         }
 
         public double GetTemperature()
